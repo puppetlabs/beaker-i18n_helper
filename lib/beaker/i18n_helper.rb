@@ -1,5 +1,4 @@
 require 'beaker'
-require 'pry'
 
 module Beaker::I18nHelper
   include Beaker::DSL
@@ -17,8 +16,6 @@ module Beaker::I18nHelper
       lang = lang.split("-")
     end
 
-    binding.pry
-
     Array(hsts).each do |host|
       if fact_on(host, "osfamily") == 'Debian'
         install_package(host, "language-pack-#{lang[0]}")
@@ -28,7 +25,6 @@ module Beaker::I18nHelper
 
   def change_locale_on(hsts, lang)
     Array(hsts).each do |host|
-      binding.pry
       on(host, "localectl set-locale LANG=#{lang}.utf8")
       on(host, "export LANGUAGE=ja_JP.utf8")
       on(host, "mkdir /opt/puppetlabs/puppet/share/locale/ja")
