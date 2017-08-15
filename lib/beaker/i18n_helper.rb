@@ -26,7 +26,7 @@ module Beaker::I18nHelper
   def change_locale_on(hsts, lang)
     Array(hsts).each do |host|
       on(host, "localectl set-locale LANG=#{lang}.utf8")
-      on(host, "export LANGUAGE=ja_JP.utf8")
+      on(host, "export LANGUAGE=#{lang}.utf8")
       on(host, "mkdir /opt/puppetlabs/puppet/share/locale/ja")
       on(host, "touch /opt/puppetlabs/puppet/share/locale/ja/puppet.po")
     end

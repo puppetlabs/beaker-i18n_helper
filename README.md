@@ -1,8 +1,6 @@
 # Beaker::I18nHelper
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/beaker/i18n_helper`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem provides some helper methods for testing i18n and l10n with Beaker.
 
 ## Installation
 
@@ -12,27 +10,70 @@ Add this line to your application's Gemfile:
 gem 'beaker-i18n_helper'
 ```
 
-And then execute:
-
-    $ bundle
-
 Or install it yourself as:
 
     $ gem install beaker-i18n_helper
 
 ## Usage
 
-TODO: Write usage instructions here
+In your spec_helper_acceptance, you may use it like:
+
+```ruby
+
+c.before :suite do
+  hosts.each do |host|
+    # Required for binding tests.
+    if fact('osfamily') == 'Debian'
+      #install language pack on debian systems
+      install_language_pack(host, "ja_JP")
+    end
+    if fact('osfamily') == 'RedHat'
+      if fact('operatingsystemmajrelease') =~ /7/ || fact('operatingsystem') =~ /Fedora/
+        shell("yum install -y bzip2")
+      end
+    end
+    #set language
+    change_locale_on(host, "ja_JP")
+    on host, puppet('module', 'install', 'stahnma/epel')
+  end
+end
+
+```
+
+## Reference
+
+#### install_language_pack(host, lang)
+
+Uses Beaker's `install_package` to install a language pack for the desired language. 
+
+e.g.
+
+```ruby
+install_language_pack(host, 'ja_JP')
+```
+
+```ruby
+install_language_pack(host, 'de_DE.utf8')
+```
+Usually only needed for Debian systems, RHEL installs all language packs by default.
+
+#### change_locale_on(host, lang)
+
+Changes the system local on a given unix host or hosts. Takes in a language string also and sets LANG and LANGUAGE on the target host to `#{lang}.utf8`.
+
+e.g.
+
+```ruby
+change_locale_on(host, "en_GB")
+```
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+PRs welcome!
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/beaker-i18n_helper.
+Bug reports and pull requests are welcome on GitHub at https://github.com/eputnam/beaker-i18n_helper.
 
 ## License
 
