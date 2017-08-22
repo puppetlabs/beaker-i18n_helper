@@ -27,8 +27,6 @@ module Beaker::I18nHelper
     Array(hsts).each do |host|
       on(host, "localectl set-locale LANG=#{lang}.utf8")
       on(host, "export LANGUAGE=#{lang}.utf8")
-      on(host, "mkdir /opt/puppetlabs/puppet/share/locale/ja")
-      on(host, "touch /opt/puppetlabs/puppet/share/locale/ja/puppet.po")
     end
   end
 end
