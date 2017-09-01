@@ -18,6 +18,7 @@ module Beaker::I18nHelper
 
     Array(hsts).each do |host|
       if fact_on(host, "osfamily") == 'Debian'
+        install_package(host, "systemd-services")
         install_package(host, "language-pack-#{lang[0]}")
       end
     end
