@@ -1,24 +1,22 @@
 require 'beaker'
 
-module Beaker::I18nHelper
+# Setting up the module
+module Beaker::I18nHelper # rubocop:disable Style/ClassAndModuleChildren
   include Beaker::DSL
   include Beaker::DSL::Helpers::FacterHelpers
 
   def install_language_pack(hsts, lang)
+    lang = lang.split('.')[0] if lang =~ /\.\w$/
 
-    if lang.match(/\.\w$/)
-      lang = lang.split(".")[0]
-    end
-
-    if lang.match(/_/)
-      lang = lang.split("_")
-    elsif lang.match(/-/)
-      lang = lang.split("-")
+    if lang =~ /_/
+      lang = lang.split('_')
+    elsif lang =~ /-/
+      lang = lang.split('-')
     end
 
     Array(hsts).each do |host|
-      if fact_on(host, "osfamily") == 'Debian'
-        install_package(host, "systemd-services")
+      if fact_on(host, 'osfamily') == 'Debian'
+        install_package(host, 'systemd-services')
         install_package(host, "language-pack-#{lang[0]}")
       end
     end
