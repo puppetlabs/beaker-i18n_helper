@@ -44,9 +44,7 @@ end
 
 #### install_language_pack_on(host, lang)
 
-Uses Beaker's `install_package` to install a language pack for the desired language. 
-
-e.g.
+Uses Beaker's `install_package` to install a language pack for the desired language.
 
 ```ruby
 install_language_pack_on(host, 'ja_JP')
