@@ -25,7 +25,7 @@ c.before :suite do
     # Required for binding tests.
     if fact('osfamily') == 'Debian'
       #install language pack on debian systems
-      install_language_pack(host, "ja_JP")
+      install_language_pack_on(host, "ja_JP")
     end
     if fact('osfamily') == 'RedHat'
       if fact('operatingsystemmajrelease') =~ /7/ || fact('operatingsystem') =~ /Fedora/
@@ -42,18 +42,18 @@ end
 
 ## Reference
 
-#### install_language_pack(host, lang)
+#### install_language_pack_on(host, lang)
 
 Uses Beaker's `install_package` to install a language pack for the desired language. 
 
 e.g.
 
 ```ruby
-install_language_pack(host, 'ja_JP')
+install_language_pack_on(host, 'ja_JP')
 ```
 
 ```ruby
-install_language_pack(host, 'de_DE.utf8')
+install_language_pack_on(host, 'de_DE.utf8')
 ```
 Usually only needed for Debian systems, RHEL installs all language packs by default.
 

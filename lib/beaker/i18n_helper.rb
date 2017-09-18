@@ -5,7 +5,7 @@ module Beaker::I18nHelper # rubocop:disable Style/ClassAndModuleChildren
   include Beaker::DSL
   include Beaker::DSL::Helpers::FacterHelpers
 
-  def install_language_pack(hsts, lang)
+  def install_language_pack_on(hsts, lang)
     lang = lang.split('.')[0] if lang =~ /\.\w$/
 
     if lang =~ /_/
