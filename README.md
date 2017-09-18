@@ -67,6 +67,10 @@ e.g.
 change_locale_on(host, "en_GB")
 ```
 
+## Limitations
+
+So far, this helper has only been tested for use with Debian and RedHat hosts.
+
 ## Development
 
 PRs welcome!
