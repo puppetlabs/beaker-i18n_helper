@@ -10,6 +10,7 @@ group :test do
   gem 'rake', '~> 10.0'
   gem 'rspec', '~> 3.0'
   gem 'beaker', '>= 3.0.0'
+  gem 'beaker-rspec'
 end
 
 group :development do
