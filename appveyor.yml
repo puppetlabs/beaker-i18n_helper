@@ -23,7 +23,7 @@ install:
         gem install openssl "~> 2.0.4" --no-rdoc --no-ri -- --with-openssl-dir=C:\msys64\mingw64
       }
       $host.SetShouldExit(0)
-  - bundle install --jobs 4 --retry 2 --without development
+  - bundle install --jobs 4 --retry 2
 
 before_test:
   - type Gemfile.lock
@@ -32,4 +32,4 @@ before_test:
   - bundle -v
 
 test_script:
-  - bundle exec rake
+  - bundle exec rspec spec/beaker

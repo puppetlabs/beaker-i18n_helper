@@ -33,7 +33,7 @@ c.before :suite do
       end
     end
     #set language
-    change_locale_on(host, "ja_JP")
+    change_locale_on(host, "ja_JP.utf-8")
     on host, puppet('module', 'install', 'stahnma/epel')
   end
 end
@@ -59,21 +59,37 @@ Usually only needed for Debian systems, RHEL installs all language packs by defa
 
 #### change_locale_on(host, lang)
 
-Changes the system local on a given unix host or hosts. Takes in a language string also and sets LANG and LANGUAGE on the target host to `#{lang}.utf8`.
+Takes in a string, `lang`, and sets $LANG, $LANGUAGE, and $LC_ALL on the target host to `#{lang}`. We **strongly** recommend appending ".utf-8" to your `lang` string.
 
 e.g.
 
 ```ruby
-change_locale_on(host, "en_GB")
+change_locale_on(host, "en_GB.utf-8")
 ```
 
 ## Limitations
 
 So far, this helper has only been tested for use with Debian and RedHat hosts.
 
+Full disclosure: changing the locale only uses global environment variables. Because the Beaker function I used is additive, it's only good for setting the locale to another language and then back to English **once**. At least that's all we've tested it with. Hopefully some day that will change. See the Development section.
+
 ## Development
 
 PRs welcome!
+
+### Testing
+
+#### Unit tests
+You can run unit tests with rspec
+```shell
+$ rspec spec/beaker/i18n_helper_spec.rb
+```
+
+#### Acceptance tests
+You can run acceptance tests with rspec, too, plus a little Beaker sugar:
+```shell
+$ BEAKER_provision=yes BEAKER_set=default rspec spec/acceptance
+```
 
 ## Contributing
 

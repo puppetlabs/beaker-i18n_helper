@@ -5,5 +5,9 @@ AllCops:
     - 'beaker-i18n_helper.gemspec'
 
 Metrics/MethodLength:
-   Max: 200
-
+  Max: 200
+Metrics/LineLength:
+  Max: 105
+Style/RegexpLiteral:
+  Description: Community preference. See https://github.com/voxpupuli/modulesync_config/issues/168
+  EnforcedStyle: percent_r
