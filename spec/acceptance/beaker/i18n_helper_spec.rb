@@ -15,7 +15,6 @@ describe Beaker::I18nHelper do
         content = shell('locale').stdout
 
         expect(content).to match(%r{ja_JP})
-        expect(content).to_not match(%r{en_US})
       end
 
       it 'changes the locale back to english' do
@@ -23,6 +22,7 @@ describe Beaker::I18nHelper do
         content = shell('locale').stdout
 
         expect(content).to match %r{en_US}
+        expect(content).to_not match(%r{ja_JP})
       end
 
       it 'errors given a bad lang string' do

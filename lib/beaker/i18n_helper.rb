@@ -45,8 +45,6 @@ module Beaker::I18nHelper # rubocop:disable Style/ClassAndModuleChildren
         host.add_env_var('LANG', lang)
         host.clear_env_var('LANGUAGE')
         host.add_env_var('LANGUAGE', lang)
-        host.clear_env_var('LC_ALL')
-        host.add_env_var('LC_ALL', lang)
       rescue RuntimeError
         raise "Unable to change locale to #{lang} on #{host}"
       end

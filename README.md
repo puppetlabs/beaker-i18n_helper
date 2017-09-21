@@ -53,7 +53,7 @@ Usually only needed for Debian systems, RHEL installs all language packs by defa
 
 #### change_locale_on(host, lang)
 
-Takes in a POSIX locale identifier, `lang`, and sets $LANG, $LANGUAGE, and $LC_ALL on the target host to `#{lang}`.
+Takes in a POSIX locale identifier, `lang`, and sets $LANG, $LANGUAGE, and on the target host to `#{lang}`.
 
 ```ruby
 change_locale_on(host, "de_DE.utf-8")
