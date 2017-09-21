@@ -25,7 +25,7 @@ c.before :suite do
     # Required for binding tests.
     if fact('osfamily') == 'Debian'
       #install language pack on debian systems
-      install_language_pack_on(host, "ja_JP")
+      install_language_pack_on(host, "ja_JP.utf-8")
     end
     if fact('osfamily') == 'RedHat'
       if fact('operatingsystemmajrelease') =~ /7/ || fact('operatingsystem') =~ /Fedora/
@@ -44,32 +44,24 @@ end
 
 #### install_language_pack_on(host, lang)
 
-Uses Beaker's `install_package` to install a language pack for the desired language.
+Uses Beaker's `install_package` to install a language pack for the desired language. Takes the host and `lang`, a POSIX locale identifier ([lang]_[region].[charset])
 
 ```ruby
-install_language_pack_on(host, 'ja_JP')
-```
-
-```ruby
-install_language_pack_on(host, 'de_DE.utf8')
+install_language_pack_on(host, 'ja_JP.utf-8')
 ```
 Usually only needed for Debian systems, RHEL installs all language packs by default.
 
 #### change_locale_on(host, lang)
 
-Takes in a string, `lang`, and sets $LANG, $LANGUAGE, and $LC_ALL on the target host to `#{lang}`. We **strongly** recommend appending ".utf-8" to your `lang` string.
-
-e.g.
+Takes in a POSIX locale identifier, `lang`, and sets $LANG, $LANGUAGE, and $LC_ALL on the target host to `#{lang}`.
 
 ```ruby
-change_locale_on(host, "en_GB.utf-8")
+change_locale_on(host, "de_DE.utf-8")
 ```
 
 ## Limitations
 
 So far, this helper has only been tested for use with Debian and RedHat hosts.
-
-Full disclosure: changing the locale only uses global environment variables. Because the Beaker function I used is additive, it's only good for setting the locale to another language and then back to English **once**. At least that's all we've tested it with. Hopefully some day that will change. See the Development section.
 
 ## Development
 
