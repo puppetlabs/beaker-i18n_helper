@@ -4,7 +4,7 @@ describe Beaker::I18nHelper do
   context 'japanese' do
     describe '#install_language_pack_on' do
       it 'installs a language pack' do
-        install_language_pack_on(hosts, 'ja_JP.utf-8')
+        install_language_on(hosts, 'ja_JP.utf-8')
         output = shell('localectl list-locales').stdout
 
         expect(output).to match %r{ja_JP}

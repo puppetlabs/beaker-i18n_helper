@@ -25,7 +25,7 @@ c.before :suite do
     # Required for binding tests.
     if fact('osfamily') == 'Debian'
       #install language pack on debian systems
-      install_language_pack_on(host, "ja_JP.utf-8")
+      install_language_on(host, "ja_JP.utf-8")
     end
     if fact('osfamily') == 'RedHat'
       if fact('operatingsystemmajrelease') =~ /7/ || fact('operatingsystem') =~ /Fedora/
@@ -42,21 +42,21 @@ end
 
 ## Reference
 
-#### install_language_pack_on(host, lang)
+#### install_language_on(hosts, lang)
 
-Uses Beaker's `install_package` to install a language pack for the desired language. Takes the host and `lang`, a POSIX locale identifier ([lang]_[region].[charset])
+Uses Beaker's `install_package` to install a language pack for the desired language. Takes a hosts array and `lang`, a POSIX locale identifier ([lang]_[region].[charset])
 
 ```ruby
-install_language_pack_on(host, 'ja_JP.utf-8')
+install_language_on(hosts, 'ja_JP.utf-8')
 ```
 Usually only needed for Debian systems, RHEL installs all language packs by default.
 
-#### change_locale_on(host, lang)
+#### change_locale_on(hosts, lang)
 
-Takes in a POSIX locale identifier, `lang`, and sets $LANG, $LANGUAGE, and on the target host to `#{lang}`.
+Takes in a POSIX locale identifier, `lang`, and sets $LANG, $LANGUAGE, and on the target hosts to `#{lang}`.
 
 ```ruby
-change_locale_on(host, "de_DE.utf-8")
+change_locale_on(hosts, "de_DE.utf-8")
 ```
 
 ## Limitations
