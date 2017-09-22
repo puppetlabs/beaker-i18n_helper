@@ -1,16 +1,25 @@
 require 'beaker'
 
-# Setting up the module
 module Beaker::I18nHelper # rubocop:disable Style/ClassAndModuleChildren
   include Beaker::DSL
   include Beaker::DSL::Helpers::FacterHelpers
 
+  # Validates POSIX locale identifier format
+  #
+  # @param lang [String] the identifier as a string, e.g. 'ja_JP.utf8'
+  # @return [Boolean] true if it's a valid identifier
+  #
   def valid_lang_string?(lang)
     lang_regex = %r{^[a-zA-Z][a-zA-Z](\_|\-)[a-zA-Z][a-zA-Z](\..*)?$}
     raise "Please use correct format for lang: #{lang_regex}" unless lang.match lang_regex
     true
   end
 
+  # Parses a given POSIX locale identifier into parts for the other functions to consume
+  #
+  # @param lang [String] the identifier as a string, e.g. 'ja_JP.utf8'
+  # @return [Array] the identifier as an array of [{lang},{region},{charset}]
+  #
   def parse_lang(lang)
     lang = lang.split('.')[0] if lang =~ %r{\.\S}
 
@@ -23,6 +32,12 @@ module Beaker::I18nHelper # rubocop:disable Style/ClassAndModuleChildren
     lang
   end
 
+  # Installs the language pack on each host for a given language (if necessary)
+  #
+  # @param hsts [Array] beaker hosts array
+  # @param lang [String] the POSIX locale identifier as a string, e.g. 'ja_JP.utf8'
+  # @return [nil]
+  #
   def install_language_pack_on(hsts, lang)
     valid_lang_string?(lang)
     lang = parse_lang(lang)
@@ -37,6 +52,12 @@ module Beaker::I18nHelper # rubocop:disable Style/ClassAndModuleChildren
     end
   end
 
+  # Changes the locale on each host to the given language
+  #
+  # @param hsts [Array] beaker hosts array
+  # @param lang [String] the POSIX locale identifier as a string, e.g. 'ja_JP.utf8'
+  # @return [nil]
+  #
   def change_locale_on(hsts, lang)
     valid_lang_string?(lang)
     Array(hsts).each do |host|
